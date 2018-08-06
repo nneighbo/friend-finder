@@ -19,38 +19,49 @@
                 <h1 class="display-4">Friend Finder</h1>
                 <p class="lead">We've Found Your Matches!</p>
                 <hr class="my-4">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-                    Launch demo modal
-                </button>
-                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                ...
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
-                            </div>
-                        </div>
-                    </div>
+                    <button id="matches" class="btn btn-primary">
+                        Show Matches!
+                    </button>
+                <hr>
+                <div class="matches">
+                    
                 </div>
             </div>
         </div>
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script>
-        $('#myModal').on('shown.bs.modal', function () {
-            $('#myInput').trigger('focus')
-        })
-        // make matches appear
+    <script type="text/javascript">
+      var currentURL = window.location.origin;
+    $("#matches").on("click", function(e){
+        e.preventDefault();
+        
+        $.ajax({url: currentURL + "/api/people", method: "GET"})
+        .then(function(peopleData){
+            var currentUser = peopleData[peopleData.length - 1];
+        var match;
+        var matchPic;
+        var matchScore = 10000000;
+        for(i = 0; i < peopleData.length; i++){
+            var scoreDiff = 0;
+            for(x = 0; x < currentUser.length; x++){
+                scoreDiff += Math.abs(peopleData[i].scores[x] - currentUser.score[x]);
+            }
+            if(scoreDiff < matchScore){
+                matchScore = scoreDiff;
+                match = peopleData[i].name;
+                matchPic = peopleData[i].picture;
+            }
+        }
+        console.log(match)
+        console.log(matchPic)
+        var $match = $("<h1>" + match + "</h1>")
+        var $img = ('<img src="' + matchPic + '" />')
+        $match.append($img)
+        $(".matches").prepend($match)
+
+        });
+    });
     </script>
 </body>
 
