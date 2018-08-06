@@ -9,7 +9,6 @@
     crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
     crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="./styles/style.css">
     <title>Friend Finder</title>
 </head>
 
@@ -18,10 +17,18 @@
     <div class="jumbotron">
         <a class="btn btn-primary btn-lg" href="/" role="button">Go Back</a>
         <h1 class="display-4 text-center">Take the survey below to start finding matches!</h1>
+        <form>
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="name" class="form-control" id="nameInput" aria-describedby="nameHelp" placeholder="Enter Name">
+            </div>
+            <div class="form-group">
+                    <label for="imageLink">Image</label>
+                    <input type="imageLink" class="form-control" id="imageInput" aria-describedby="imageHelp" placeholder="Enter Image Link">
+            </div>
         <hr class="my-4">
         <div class="container">
             <span class="col-md-12">
-                <form>
                 <span class="row">
                     <h1 class="display-5">Question One</h1>
                 </span>
@@ -379,7 +386,18 @@
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="../data/friends.js"></script>
-</body>
+    <script>
+        $("#button").on("click", function(e){
+            e.preventDefault();
 
+            var newScore = {
+                // add way to make array
+            }
+
+            $.post("/api/people", newScore).then(function(data){
+                console.log(data);
+            });
+        });
+    </script>
+</body>
 </html>

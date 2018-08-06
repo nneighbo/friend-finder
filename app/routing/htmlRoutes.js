@@ -16,6 +16,11 @@ app.get("/survey", function(req, res){
     res.sendFile(path.resolve("../public/survey.html"));
 });
 
+app.get("/matches", function(req, res){
+    res.sendFile(path.resolve("../public/matches.html"));
+});
+
+
 app.listen(PORT, function() {
     console.log("App listening on PORT " + PORT);
 });
